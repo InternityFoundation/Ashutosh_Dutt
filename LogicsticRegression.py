@@ -40,7 +40,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split as tts
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import log_loss
 california_housing_dataframe = pd.read_csv("https://download.mlcc.google.com/mledu-datasets/california_housing_train.csv", sep=",")
 X = california_housing_dataframe[
     ["latitude",
@@ -60,6 +60,6 @@ X_test= sc.transform(X_test)
 classifier= LogisticRegression(random_state=0)
 classifier.fit(X_train,y_train)
 y_pred= classifier.predict(X_test)
-cm= confusion_matrix(y_test,y_pred)
+cm= log_loss(y_test,y_pred)
 print(cm)
 
