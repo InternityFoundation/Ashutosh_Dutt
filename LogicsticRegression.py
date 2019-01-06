@@ -1,4 +1,4 @@
-import numpy as np
+'''import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cross_validation import train_test_split as tts
@@ -32,7 +32,34 @@ plt.title('Logistic Regression (Test set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
-plt.show()
+plt.show()'''
 
-
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split as tts
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+california_housing_dataframe = pd.read_csv("https://download.mlcc.google.com/mledu-datasets/california_housing_train.csv", sep=",")
+X = california_housing_dataframe[
+    ["latitude",
+     "longitude",
+     "housing_median_age",
+     "total_rooms",
+     "total_bedrooms",
+     "population",
+     "households",
+     "median_income"]]
+y=california_housing_dataframe["median_house_value"] 
+X.describe()
+X_train,X_test,y_train,y_test= tts(X,y,random_state=0,test_size=0.2)
+sc= StandardScaler()
+X_train= sc.fit_transform(X_train)
+X_test= sc.transform(X_test)
+classifier= LogisticRegression(random_state=0)
+classifier.fit(X_train,y_train)
+y_pred= classifier.predict(X_test)
+cm= confusion_matrix(y_test,y_pred)
+print(cm)
 
